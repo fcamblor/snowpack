@@ -371,6 +371,9 @@ export async function command(commandOptions: CommandOptions) {
               headers: req.headers,
               throwHttpErrors: false,
             });
+            if(response.headers['content-encoding'] === 'gzip') {
+              delete response.headers['content-encoding'];
+            }
             res.writeHead(response.statusCode, response.headers);
             res.write(response.body);
           } catch (err) {
